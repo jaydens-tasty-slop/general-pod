@@ -21,11 +21,11 @@ type FeedData struct {
 }
 
 type FeedEpisode struct {
-	Title, DisplayTitle, Speaker, Session, Link, Description, GUID, PubDate string
-	AudioURL, ArtworkURL                                                    string
-	AudioBytes, DurationSeconds, EpisodeNumber, SeasonNumber                int64
-	SeasonName, Language                                                    string
-	IsSession                                                               bool
+	Title, DisplayTitle, Speaker, SpeakerTitle, Session, Link, Description, GUID, PubDate string
+	AudioURL, ArtworkURL                                                                  string
+	AudioBytes, DurationSeconds, EpisodeNumber, SeasonNumber                              int64
+	SeasonName, Language                                                                  string
+	IsSession                                                                             bool
 }
 
 func feedDataFor(baseURL string, language Language, slug string, source []Episode) FeedData {
@@ -49,9 +49,12 @@ func feedDataFor(baseURL string, language Language, slug string, source []Episod
 		description := item.Title
 		if item.Speaker != "" {
 			title += " — " + item.Speaker
-			description += " by " + item.Speaker
+			description += "\nSpeaker: " + item.Speaker
 		}
-		description += ".\n\nLink: " + link
+		if item.SpeakerTitle != "" {
+			description += "\n" + item.SpeakerTitle
+		}
+		description += "\n\nLink: " + link
 		seasonNumber := int64(conferenceNumber(item.Conference.Year))
 		seasonName := item.Conference.Title
 		if language.ISOCode == "eng" {
@@ -62,7 +65,7 @@ func feedDataFor(baseURL string, language Language, slug string, source []Episod
 			artworkURL = baseURL + item.ArtworkPath
 		}
 		data.Episodes = append(data.Episodes, FeedEpisode{
-			Title: title, DisplayTitle: item.Title, Speaker: item.Speaker, Session: item.Session,
+			Title: title, DisplayTitle: item.Title, Speaker: item.Speaker, SpeakerTitle: item.SpeakerTitle, Session: item.Session,
 			Link: link, Description: description,
 			GUID:    uuid.NewSHA1(podcastGUIDNamespace, []byte("generalpod:"+language.ISOCode+":"+item.ID)).String(),
 			PubDate: rssDate(item.Publication), AudioURL: item.AudioURL, AudioBytes: item.AudioBytes,

@@ -18,7 +18,7 @@ import (
 func fixtureEpisode() Episode {
 	return Episode{
 		ID: "42", URI: "/general-conference/2025/04/example", Title: "Faith & Joy <Today>",
-		Speaker: "Ada Example", Session: "Saturday Morning Session",
+		Speaker: "Ada Example", SpeakerTitle: "Of the Example Society", Session: "Saturday Morning Session",
 		Publication: time.Date(2025, 4, 5, 0, 0, 0, 0, time.UTC),
 		Conference:  Conference{Year: 2025, Month: 4}, Position: 2, EpisodeNumber: 2,
 		AudioURL:   "https://assets.churchofjesuschrist.org/audio.mp3?a=1&b=2",
@@ -37,6 +37,7 @@ func TestRenderFeedIsExactAndEscaped(t *testing.T) {
 		`xmlns:content="http://purl.org/rss/1.0/modules/content/"`,
 		`xmlns:podcast="https://podcastindex.org/namespace/1.0"`,
 		`<title>Faith &amp; Joy &lt;Today&gt; — Ada Example</title>`,
+		`<description>Faith &amp; Joy &lt;Today&gt;&#xA;Speaker: Ada Example&#xA;Of the Example Society&#xA;&#xA;Link: https://www.churchofjesuschrist.org/study/general-conference/2025/04/example?lang=eng</description>`,
 		`url="https://assets.churchofjesuschrist.org/audio.mp3?a=1&amp;b=2"`,
 		`<podcast:season name="195th Annual General Conference">195</podcast:season>`,
 		`<itunes:duration>91</itunes:duration>`,
