@@ -2,12 +2,12 @@ module github.com/jaydenmilne/general-pod
 
 go 1.24.3
 
-require github.com/jaydenmilne/podcast v0.2.0
-
 require (
-	github.com/go-audio/audio v1.0.0 // indirect
-	github.com/google/uuid v1.6.0 // indirect
-	github.com/mattn/go-sqlite3 v1.14.28 // indirect
-	github.com/sanity-io/litter v1.5.8 // indirect
-	github.com/tcolgate/mp3 v0.0.0-20170426193717-e79c5a46d300 // indirect
+	github.com/go-fonts/liberation v0.3.3
+	github.com/google/uuid v1.6.0
+	github.com/mattn/go-sqlite3 v1.14.28
+	github.com/ulikunitz/xz v0.5.15
+	golang.org/x/image v0.30.0
 )
+
+require golang.org/x/text v0.28.0 // indirect
